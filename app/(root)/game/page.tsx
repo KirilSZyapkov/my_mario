@@ -1,8 +1,10 @@
-import React from 'react'
+import AnimatedCanvas from "../_components/AnimatedCanvas";
 
 function GamePage() {
   return (
-    <div>Game</div>
+    <div>
+      <AnimatedCanvas />
+    </div>
   )
 }
 
