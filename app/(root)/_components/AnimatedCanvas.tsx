@@ -38,9 +38,9 @@ function AnimatedCanvas() {
   return (
     <canvas
       ref={canvasRef}
-      width={1024}
-      height={576}
-      className="inline-block border-2 border-black"
+           width={1024}
+           height={576}
+      className="flex border-2 border-black"
     />
   );
 }

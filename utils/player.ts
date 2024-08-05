@@ -1,4 +1,4 @@
-const gravity: number = 0.5;
+const gravity: number = 0.1;
 
 export class Player {
   position: { x: number; y: number };
