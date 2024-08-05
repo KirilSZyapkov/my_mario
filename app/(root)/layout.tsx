@@ -1,3 +1,4 @@
+import GameFooter from "./_components/GameFooter";
 import GameHeader from "./_components/GameHeader";
 
 
@@ -10,6 +11,7 @@ export default function RootLayout({
     <main>
      <GameHeader/>
       {children}
+      <GameFooter/>
     </main>
   );
 }
