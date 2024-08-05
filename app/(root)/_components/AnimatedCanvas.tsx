@@ -11,7 +11,7 @@ function AnimatedCanvas() {
 
   const draw = (c: CanvasRenderingContext2D) => {
     c.fillStyle = "white";
-    c.fillRect(0,0, 1024, 576);
+    c.fillRect(0, 0, 1024, 576);
     player.update(c);
   };
 
@@ -35,7 +35,14 @@ function AnimatedCanvas() {
     };
   }, []);
 
-  return <canvas ref={canvasRef} width={500} height={500} />;
+  return (
+    <canvas
+      ref={canvasRef}
+      width={1024}
+      height={576}
+      className="inline-block border-2 border-black"
+    />
+  );
 }
 
 export default AnimatedCanvas;
