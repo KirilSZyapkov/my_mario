@@ -18,13 +18,13 @@ export class Player {
     this.height = 30;
   }
 
-  draw(c?: any) {
+  draw(c: CanvasRenderingContext2D) {
     c.fillStyle = "red";
     c.fillRect(this.position.x, this.position.y, this.with, this.height);
   }
 
-  update() {
-    this.draw();
+  update(c: CanvasRenderingContext2D) {
+    this.draw(c);
     this.position.y += this.velocity.y;
     this.position.x += this.velocity.x;
     this.velocity.y += gravity;
