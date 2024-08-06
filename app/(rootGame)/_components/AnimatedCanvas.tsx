@@ -8,10 +8,12 @@ function AnimatedCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const requestRef = useRef<number | null>(null);
   const [player, setPlayer] = useState(new Player());
+  const [platform, setPlatform] = useState(new Platforms({x:100, y:100}))
 
   const draw = (c: CanvasRenderingContext2D) => {
     c.fillStyle = "white";
     c.fillRect(0, 0, 1024, 576);
+    platform.draw(c);
     player.update(c);
   };
 
