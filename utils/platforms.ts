@@ -6,10 +6,10 @@ export class Platforms {
   with: number;
   height: number;
 
-  constructor({ x, y }: { x: number; y: number }) {
+  constructor(x: number, y: number) {
     this.position = {
-      x: x,
-      y: y,
+      x,
+      y,
     };
     this.with = 500;
     this.height = 30;
@@ -17,6 +17,6 @@ export class Platforms {
 
   draw(c: CanvasRenderingContext2D) {
     c.fillStyle = "blue";
-    c.fillRect = (this.position.x, this.position.y, this.with, this.height);
+    c.fillRect(this.position.x, this.position.y, this.with, this.height);
   }
 }
