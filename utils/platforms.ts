@@ -3,7 +3,7 @@ export class Platforms {
     x: number;
     y: number;
   };
-  with: number;
+  width: number;
   height: number;
 
   constructor(x: number, y: number) {
@@ -11,12 +11,12 @@ export class Platforms {
       x,
       y,
     };
-    this.with = 500;
+    this.width = 500;
     this.height = 30;
   }
 
   draw(c: CanvasRenderingContext2D) {
     c.fillStyle = "blue";
-    c.fillRect(this.position.x, this.position.y, this.with, this.height);
+    c.fillRect(this.position.x, this.position.y, this.width, this.height);
   }
 }
