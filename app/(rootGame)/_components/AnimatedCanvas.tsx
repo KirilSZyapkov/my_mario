@@ -55,6 +55,32 @@ function AnimatedCanvas() {
     };
   }, []);
 
+  window.addEventListener("keydown", (e) => {
+    switch (e.key) {
+      case "d":
+        setPlayer((curPlauer) => {
+          let p = curPlauer;
+          p.position.x += 2.5;
+          return p;
+        });
+        break;
+      case "a":
+        setPlayer((curPlauer) => {
+          let p = curPlauer;
+          p.position.x -= 2.5;
+          return p;
+        });
+        break;
+      case "w":
+        setPlayer((curPlauer) => {
+          let p = curPlauer;
+          p.velocityY = -5;
+          return p;
+        });
+        break;
+    }
+  });
+
   return (
     <canvas
       ref={canvasRef}
