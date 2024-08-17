@@ -60,14 +60,39 @@ function AnimatedCanvas() {
       case "d":
         setPlayer((curPlauer) => {
           let p = curPlauer;
-          p.position.x += 2.5;
+          p.velocityX += 2.5;
           return p;
         });
         break;
       case "a":
         setPlayer((curPlauer) => {
           let p = curPlauer;
-          p.position.x -= 2.5;
+          p.velocityX -= 2.5;
+          return p;
+        });
+        break;
+      case "w":
+        setPlayer((curPlauer) => {
+          let p = curPlauer;
+          p.velocityY = -5;
+          return p;
+        });
+        break;
+    }
+  });
+  window.addEventListener("keyup", (e) => {
+    switch (e.key) {
+      case "d":
+        setPlayer((curPlauer) => {
+          let p = curPlauer;
+          p.velocityX = 0;
+          return p;
+        });
+        break;
+      case "a":
+        setPlayer((curPlauer) => {
+          let p = curPlauer;
+          p.velocityX = 0;
           return p;
         });
         break;
