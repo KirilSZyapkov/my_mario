@@ -6,12 +6,12 @@ export class Platforms {
   width: number;
   height: number;
 
-  constructor(x: number, y: number) {
+  constructor(x: number, y: number, width:number) {
     this.position = {
       x,
       y,
     };
-    this.width = 500;
+    this.width = width;
     this.height = 30;
   }
 

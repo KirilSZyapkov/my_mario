@@ -11,16 +11,16 @@ function AnimatedCanvas() {
   const [platforms, setPlatforms] = useState<Platforms[]>(() => {
     let plat: Platforms[] = [];
     for (let index = 0; index < 10; index++) {
-      if (index % 3 === 0) {
+      if (index % 2 === 0) {
         if (index === 0) {
-          plat.push(new Platforms(index * 500, 500));
+          plat.push(new Platforms(index * 500, 500, 250));
         } else {
-          plat.push(new Platforms(index * 500 + 355, 500));
+          plat.push(new Platforms(index * 500 + 355, 500, index * 55));
         }
-      } else if (index % 4 === 0) {
-        plat.push(new Platforms(index * 500 + 355, 380));
+      } else if (index % 3 === 0) {
+        plat.push(new Platforms(index * 500 + 355, 380, index * 55));
       } else {
-        plat.push(new Platforms(index * 500, 500));
+        plat.push(new Platforms(index * 500, 500, 250));
       }
     }
     return plat;
@@ -52,7 +52,9 @@ function AnimatedCanvas() {
           });
         } else if (keys.left.pressed) {
           km -= 5;
-          if (curPlayer.position.x !== 200) {
+          console.log(player.velocityX);
+          
+          if (curPlayer.velocityX !== 200) {
             platforms.forEach((platform) => {
               platform.position.x += 5;
             });
