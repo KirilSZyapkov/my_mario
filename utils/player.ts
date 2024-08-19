@@ -11,7 +11,7 @@ export class Player {
 
   constructor() {
     this.position = {
-      x: 100,
+      x: 200,
       y: 100,
     };
     this.velocityX = 0;
