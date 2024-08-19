@@ -22,9 +22,6 @@ function AnimatedCanvas() {
     return platforms;
   });
 
-  console.log(platforms);
-  
-
   const draw = (c: CanvasRenderingContext2D) => {
     c.fillStyle = "white";
     c.fillRect(0, 0, 1024, 576);
@@ -36,6 +33,25 @@ function AnimatedCanvas() {
 
   const updateCollisions = () => {
     setPlayer((curPlayer) => {
+      if (keys.right.pressed && curPlayer.position.x < 700) {
+        curPlayer.velocityX = 5;
+      } else if (keys.left.pressed && curPlayer.position.x > 130) {
+        curPlayer.velocityX = -5;
+      } else {
+        curPlayer.velocityX = 0;
+        if (keys.right.pressed) {
+          km += 5;
+          platforms.forEach((platform) => {
+            platform.position.x -= 5;
+          });
+        } else if (keys.left.pressed) {
+          km -= 5;
+          platforms.forEach((platform) => {
+            platform.position.x += 5;
+          });
+        }
+      }
+
       platforms.forEach((platform) => {
         if (
           curPlayer.position?.y + curPlayer.height <= platform.position.y &&
@@ -74,55 +90,81 @@ function AnimatedCanvas() {
     };
   }, []);
 
-  window.addEventListener("keydown", (e) => {
-    switch (e.key) {
-      case "d":
-        setPlayer((curPlauer) => {
-          let p = curPlauer;
-          p.velocityX = 2.5;
-          return p;
-        });
-        break;
+  let keys = {
+    right: {
+      pressed: false,
+    },
+    left: {
+      pressed: false,
+    },
+  };
+  let km = 0;
+
+  window.addEventListener("keydown", ({ key }) => {
+    switch (key) {
       case "a":
-        setPlayer((curPlauer) => {
-          let p = curPlauer;
-          p.velocityX = -2.5;
-          return p;
-        });
+        keys.left.pressed = true;
         break;
-      case "w":
-        setPlayer((curPlauer) => {
-          let p = curPlauer;
-          p.velocityY = -5;
-          return p;
-        });
+      case "d":
+        keys.right.pressed = true;
         break;
     }
+    // switch (key) {
+    //   case "d":
+    //     setPlayer((curPlauer) => {
+    //       let p = curPlauer;
+    //       p.velocityX = 2.5;
+    //       return p;
+    //     });
+    //     break;
+    //   case "a":
+    //     setPlayer((curPlauer) => {
+    //       let p = curPlauer;
+    //       p.velocityX = -2.5;
+    //       return p;
+    //     });
+    //     break;
+    //   case "w":
+    //     setPlayer((curPlauer) => {
+    //       let p = curPlauer;
+    //       p.velocityY = -5;
+    //       return p;
+    //     });
+    //     break;
+    // }
   });
-  window.addEventListener("keyup", (e) => {
-    switch (e.key) {
-      case "d":
-        setPlayer((curPlauer) => {
-          let p = curPlauer;
-          p.velocityX = 0;
-          return p;
-        });
-        break;
+  window.addEventListener("keyup", ({ key }) => {
+    switch (key) {
       case "a":
-        setPlayer((curPlauer) => {
-          let p = curPlauer;
-          p.velocityX = 0;
-          return p;
-        });
+        keys.left.pressed = false;
         break;
-      case "w":
-        setPlayer((curPlauer) => {
-          let p = curPlauer;
-          p.velocityY = -5;
-          return p;
-        });
+      case "d":
+        keys.right.pressed = false;
         break;
     }
+    // switch (key) {
+    //   case "d":
+    //     setPlayer((curPlauer) => {
+    //       let p = curPlauer;
+    //       p.velocityX = 0;
+    //       return p;
+    //     });
+    //     break;
+    //   case "a":
+    //     setPlayer((curPlauer) => {
+    //       let p = curPlauer;
+    //       p.velocityX = 0;
+    //       return p;
+    //     });
+    //     break;
+    //   case "w":
+    //     setPlayer((curPlauer) => {
+    //       let p = curPlauer;
+    //       p.velocityY = -5;
+    //       return p;
+    //     });
+    //     break;
+    // }
   });
 
   return (
