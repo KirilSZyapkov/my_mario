@@ -8,28 +8,36 @@ function AnimatedCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const requestRef = useRef<number | null>(null);
   const [player, setPlayer] = useState(new Player());
-  const [platform, setPlatform] = useState(new Platforms(0, 500));
+  const [platforms, setPlatforms] = useState<Platforms[]>([
+    new Platforms(0, 500),
+    new Platforms(500, 500),
+    new Platforms(200, 400),
+  ]);
 
   const draw = (c: CanvasRenderingContext2D) => {
     c.fillStyle = "white";
     c.fillRect(0, 0, 1024, 576);
     player.update(c);
-    platform.draw(c);
+    platforms.forEach((platform) => {
+      platform.draw(c);
+    });
   };
 
   const updateCollisions = () => {
     setPlayer((curPlayer) => {
-      if (
-        curPlayer.position?.y + curPlayer.height <= platform.position.y &&
-        curPlayer.position?.y + curPlayer.height + curPlayer.velocityY >=
+      platforms.forEach((platform) => {
+        if (
+          curPlayer.position?.y + curPlayer.height <= platform.position.y &&
+          curPlayer.position?.y + curPlayer.height + curPlayer.velocityY >=
           platform.position.y &&
-        curPlayer.position.x + curPlayer.width >= platform.position.x &&
-        curPlayer.position.x <= platform.position.x + platform.width
-      ) {
-        let p = curPlayer;
-        p.velocityY = 0;
-        return p;
-      }
+          curPlayer.position.x + curPlayer.width >= platform.position.x &&
+          curPlayer.position.x <= platform.position.x + platform.width
+        ) {
+          let p = curPlayer;
+          p.velocityY = 0;
+          return p;
+        }
+      });
       return curPlayer;
     });
   };
@@ -60,14 +68,14 @@ function AnimatedCanvas() {
       case "d":
         setPlayer((curPlauer) => {
           let p = curPlauer;
-          p.velocityX += 2.5;
+          p.velocityX = 2.5;
           return p;
         });
         break;
       case "a":
         setPlayer((curPlauer) => {
           let p = curPlauer;
-          p.velocityX -= 2.5;
+          p.velocityX = -2.5;
           return p;
         });
         break;
