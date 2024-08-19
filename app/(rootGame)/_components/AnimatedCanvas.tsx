@@ -8,11 +8,22 @@ function AnimatedCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const requestRef = useRef<number | null>(null);
   const [player, setPlayer] = useState(new Player());
-  const [platforms, setPlatforms] = useState<Platforms[]>([
-    new Platforms(0, 500),
-    new Platforms(500, 500),
-    new Platforms(200, 400),
-  ]);
+  const [platforms, setPlatforms] = useState<Platforms[]>(() => {
+    let platforms = [];
+    for (let index = 0; index < 10; index++) {
+      if (index % 3 === 0) {
+        platforms.push(new Platforms(index * 500 + 55, 500));
+      } else if (index % 4 === 0) {
+        platforms.push(new Platforms(index * 500, 400));
+      } else {
+        platforms.push(new Platforms(500, 500));
+      }
+    }
+    return platforms;
+  });
+
+  console.log(platforms);
+  
 
   const draw = (c: CanvasRenderingContext2D) => {
     c.fillStyle = "white";
@@ -29,7 +40,7 @@ function AnimatedCanvas() {
         if (
           curPlayer.position?.y + curPlayer.height <= platform.position.y &&
           curPlayer.position?.y + curPlayer.height + curPlayer.velocityY >=
-          platform.position.y &&
+            platform.position.y &&
           curPlayer.position.x + curPlayer.width >= platform.position.x &&
           curPlayer.position.x <= platform.position.x + platform.width
         ) {
