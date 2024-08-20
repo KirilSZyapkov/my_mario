@@ -1,3 +1,4 @@
+
 export class Platforms {
   position: {
     x: number;
@@ -5,18 +6,19 @@ export class Platforms {
   };
   width: number;
   height: number;
+  image: any
 
-  constructor(x: number, y: number, width:number) {
+  constructor(x: number, y: number, image:any) {
     this.position = {
       x,
       y,
     };
-    this.width = width;
-    this.height = 30;
+    this.image = image;
+    this.width = image.width;
+    this.height = image.height;
   }
 
   draw(c: CanvasRenderingContext2D) {
-    c.fillStyle = "blue";
-    c.fillRect(this.position.x, this.position.y, this.width, this.height);
+    c.drawImage(this.image, this.width, this.height);
   }
 }

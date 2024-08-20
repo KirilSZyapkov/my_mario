@@ -3,6 +3,8 @@
 import { useRef, useEffect, useState } from "react";
 import { Player } from "@/utils/player";
 import { Platforms } from "@/utils/platforms";
+import Image from "next/image";
+
 
 function AnimatedCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -13,14 +15,14 @@ function AnimatedCanvas() {
     for (let index = 0; index < 10; index++) {
       if (index % 2 === 0) {
         if (index === 0) {
-          plat.push(new Platforms(index * 500, 500, 250));
+          plat.push(new Platforms(index * 500, 500, <Image src="/assets/platform.png" alt="platform"/>));
         } else {
-          plat.push(new Platforms(index * 500 + 355, 500, index * 55));
+          plat.push(new Platforms(index * 500 + 355, 500, <Image src="/assets/platform.png" alt="platform"/>));
         }
       } else if (index % 3 === 0) {
-        plat.push(new Platforms(index * 500 + 355, 380, index * 55));
+        plat.push(new Platforms(index * 500 + 355, 380, <Image src="/assets/platform.png" alt="platform"/>));
       } else {
-        plat.push(new Platforms(index * 500, 500, 250));
+        plat.push(new Platforms(index * 500, 500, <Image src="/assets/platform.png" alt="platform"/>));
       }
     }
     return plat;
@@ -29,10 +31,10 @@ function AnimatedCanvas() {
   const draw = (c: CanvasRenderingContext2D) => {
     c.fillStyle = "white";
     c.fillRect(0, 0, 1024, 576);
-    player.update(c);
     platforms.forEach((platform) => {
       platform.draw(c);
     });
+    player.update(c);
   };
 
   const updateCollisions = () => {
@@ -53,7 +55,7 @@ function AnimatedCanvas() {
         } else if (keys.left.pressed) {
           km -= 5;
           console.log(player.velocityX);
-          
+
           if (curPlayer.velocityX !== 200) {
             platforms.forEach((platform) => {
               platform.position.x += 5;
