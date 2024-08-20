@@ -3,26 +3,30 @@
 import { useRef, useEffect, useState } from "react";
 import { Player } from "@/utils/player";
 import { Platforms } from "@/utils/platforms";
-import Image from "next/image";
-
 
 function AnimatedCanvas() {
+  const platformImg = new Image();
+  platformImg.src = "assets/platform.png";
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const requestRef = useRef<number | null>(null);
   const [player, setPlayer] = useState(new Player());
   const [platforms, setPlatforms] = useState<Platforms[]>(() => {
     let plat: Platforms[] = [];
-    for (let index = 0; index < 10; index++) {
+    for (let index = 0; index < 32; index++) {
       if (index % 2 === 0) {
         if (index === 0) {
-          plat.push(new Platforms(index * 500, 500, <Image src="/assets/platform.png" alt="platform"/>));
+          plat.push(new Platforms(index * platformImg.width, 500, platformImg));
         } else {
-          plat.push(new Platforms(index * 500 + 355, 500, <Image src="/assets/platform.png" alt="platform"/>));
+          plat.push(
+            new Platforms(index * platformImg.width + 660, 500, platformImg)
+          );
         }
       } else if (index % 3 === 0) {
-        plat.push(new Platforms(index * 500 + 355, 380, <Image src="/assets/platform.png" alt="platform"/>));
+        plat.push(
+          new Platforms(index * platformImg.width + 660, 280, platformImg)
+        );
       } else {
-        plat.push(new Platforms(index * 500, 500, <Image src="/assets/platform.png" alt="platform"/>));
+        plat.push(new Platforms(index * platformImg.width, 500, platformImg));
       }
     }
     return plat;
@@ -31,6 +35,7 @@ function AnimatedCanvas() {
   const draw = (c: CanvasRenderingContext2D) => {
     c.fillStyle = "white";
     c.fillRect(0, 0, 1024, 576);
+
     platforms.forEach((platform) => {
       platform.draw(c);
     });
@@ -43,8 +48,6 @@ function AnimatedCanvas() {
         curPlayer.velocityX = 3;
       } else if (keys.left.pressed && curPlayer.position.x > 230) {
         curPlayer.velocityX = -3;
-      } else if (keys.up.pressed) {
-        curPlayer.velocityY = -1;
       } else {
         curPlayer.velocityX = 0;
         if (keys.right.pressed) {
@@ -141,7 +144,7 @@ function AnimatedCanvas() {
       case "w":
         setPlayer((curPlauer) => {
           let p = curPlauer;
-          p.velocityY = -5;
+          p.velocityY = -6.7;
           return p;
         });
         break;
