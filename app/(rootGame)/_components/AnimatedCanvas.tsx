@@ -5,8 +5,11 @@ import { Player } from "@/utils/player";
 import { Platforms } from "@/utils/platforms";
 
 function AnimatedCanvas() {
-  const platformImg = new Image();
-  platformImg.src = "assets/platform.png";
+  const longPlatformImg = new Image();
+  longPlatformImg.src = "assets/platform.png";
+  const shortPlatformImg = new Image();
+  shortPlatformImg.src = "assets/platformSmallTall.png"
+
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const requestRef = useRef<number | null>(null);
   const [player, setPlayer] = useState(new Player());
@@ -15,18 +18,18 @@ function AnimatedCanvas() {
     for (let index = 0; index < 32; index++) {
       if (index % 2 === 0) {
         if (index === 0) {
-          plat.push(new Platforms(index * platformImg.width, 500, platformImg));
+          plat.push(new Platforms(index * longPlatformImg.width, 500, longPlatformImg));
         } else {
           plat.push(
-            new Platforms(index * platformImg.width + 660, 500, platformImg)
+            new Platforms(index * longPlatformImg.width + 380, 500, longPlatformImg)
           );
         }
       } else if (index % 3 === 0) {
         plat.push(
-          new Platforms(index * platformImg.width + 660, 280, platformImg)
+          new Platforms(index * longPlatformImg.width + 500, 430, shortPlatformImg)
         );
       } else {
-        plat.push(new Platforms(index * platformImg.width, 500, platformImg));
+        plat.push(new Platforms(index * longPlatformImg.width, 500, longPlatformImg));
       }
     }
     return plat;
@@ -144,7 +147,7 @@ function AnimatedCanvas() {
       case "w":
         setPlayer((curPlauer) => {
           let p = curPlauer;
-          p.velocityY = -6.7;
+          p.velocityY = -4;
           return p;
         });
         break;
