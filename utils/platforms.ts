@@ -18,6 +18,8 @@ export class Platforms {
   }
 
   draw(c: CanvasRenderingContext2D) {
-    c.drawImage(this.image, this.position.x, this.position.y);
+    
+      c.drawImage(this.image, this.position.x, this.position.y);
+    
   }
 }

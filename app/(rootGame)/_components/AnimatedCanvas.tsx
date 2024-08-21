@@ -8,7 +8,7 @@ function AnimatedCanvas() {
   const longPlatformImg = new Image();
   longPlatformImg.src = "assets/platform.png";
   const shortPlatformImg = new Image();
-  shortPlatformImg.src = "assets/platformSmallTall.png"
+  shortPlatformImg.src = "assets/platformSmallTall.png";
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const requestRef = useRef<number | null>(null);
@@ -18,18 +18,30 @@ function AnimatedCanvas() {
     for (let index = 0; index < 32; index++) {
       if (index % 2 === 0) {
         if (index === 0) {
-          plat.push(new Platforms(index * longPlatformImg.width, 500, longPlatformImg));
+          plat.push(
+            new Platforms(index * longPlatformImg.width, 500, longPlatformImg)
+          );
         } else {
           plat.push(
-            new Platforms(index * longPlatformImg.width + 380, 500, longPlatformImg)
+            new Platforms(
+              index * longPlatformImg.width + 350,
+              500,
+              longPlatformImg
+            )
           );
         }
       } else if (index % 3 === 0) {
         plat.push(
-          new Platforms(index * longPlatformImg.width + 500, 430, shortPlatformImg)
+          new Platforms(
+            index * longPlatformImg.width + 500,
+            430,
+            shortPlatformImg
+          )
         );
       } else {
-        plat.push(new Platforms(index * longPlatformImg.width, 500, longPlatformImg));
+        plat.push(
+          new Platforms(index * longPlatformImg.width, 500, longPlatformImg)
+        );
       }
     }
     return plat;
@@ -50,6 +62,8 @@ function AnimatedCanvas() {
       if (keys.right.pressed && curPlayer.position.x < 500) {
         curPlayer.velocityX = 3;
       } else if (keys.left.pressed && curPlayer.position.x > 230) {
+        console.log(curPlayer.position.x);
+        
         curPlayer.velocityX = -3;
       } else {
         curPlayer.velocityX = 0;
@@ -60,13 +74,13 @@ function AnimatedCanvas() {
           });
         } else if (keys.left.pressed) {
           km -= 5;
-          console.log(player.velocityX);
 
-          if (curPlayer.velocityX !== 200) {
-            platforms.forEach((platform) => {
+          platforms.forEach((platform) => {
+            
+            if (platforms[0].position.x !== 0) {
               platform.position.x += 5;
-            });
-          }
+            }
+          });
         }
       }
 
