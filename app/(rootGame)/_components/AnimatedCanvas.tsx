@@ -3,17 +3,17 @@
 import { useRef, useEffect, useState } from "react";
 import { Player } from "@/utils/player";
 import { Platforms } from "@/utils/platforms";
+import { createImage } from "@/utils/createImage";
 
 function AnimatedCanvas() {
-  const longPlatformImg = new Image();
-  longPlatformImg.src = "assets/platform.png";
-  const shortPlatformImg = new Image();
-  shortPlatformImg.src = "assets/platformSmallTall.png";
+  const longPlatformImg = createImage("assets/platform.png");
+  const shortPlatformImg = createImage("assets/platformSmallTall.png");
+  
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const requestRef = useRef<number | null>(null);
   const [player, setPlayer] = useState(new Player());
-  const [platforms, setPlatforms] = useState<Platforms[]>(() => {
+  const [platforms] = useState<Platforms[]>(() => {
     let plat: Platforms[] = [];
     for (let index = 0; index < 32; index++) {
       if (index % 2 === 0) {
@@ -62,8 +62,8 @@ function AnimatedCanvas() {
       if (keys.right.pressed && curPlayer.position.x < 500) {
         curPlayer.velocityX = 3;
       } else if (keys.left.pressed && curPlayer.position.x > 230) {
-        console.log(curPlayer.position.x);
         
+
         curPlayer.velocityX = -3;
       } else {
         curPlayer.velocityX = 0;
@@ -76,7 +76,6 @@ function AnimatedCanvas() {
           km -= 5;
 
           platforms.forEach((platform) => {
-            
             if (platforms[0].position.x !== 0) {
               platform.position.x += 5;
             }
