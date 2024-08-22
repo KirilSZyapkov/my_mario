@@ -5,7 +5,7 @@ import { Player } from "@/utils/player";
 import { Platforms } from "@/utils/platforms";
 import { createImage } from "@/utils/createImage";
 import { GenericObjects } from "@/utils/genericObjects";
-import { randomNumbers } from "@/utils/randomNumbers";
+
 
 function AnimatedCanvas() {
   const longPlatformImg = createImage("assets/platform.png");
@@ -69,13 +69,13 @@ function AnimatedCanvas() {
 
   const updateCollisions = () => {
     setPlayer((curPlayer) => {
-      if (keys.right.pressed && curPlayer.position.x < 500) {
+      if (keys.right.pressed && curPlayer.position.x < 500&& km < 14000) {
         curPlayer.velocityX = 3;
-      } else if (keys.left.pressed && curPlayer.position.x > 230) {
+      } else if (keys.left.pressed && curPlayer.position.x > 230&& km !== 14000) {
         curPlayer.velocityX = -3;
       } else {
         curPlayer.velocityX = 0;
-        if (keys.right.pressed) {
+        if (keys.right.pressed && km < 14000) {
           km += 5;
           genericObjects.forEach((genericObject) => {
             genericObject.position.x -= 3;
@@ -83,7 +83,9 @@ function AnimatedCanvas() {
           platforms.forEach((platform) => {
             platform.position.x -= 5;
           });
-        } else if (keys.left.pressed) {
+          console.log(km);
+          
+        } else if (keys.left.pressed && km !== 14000) {
           km -= 5;
           genericObjects.forEach((genericObject) => {
             if (platforms[0].position.x !== 0) {
