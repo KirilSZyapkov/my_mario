@@ -83,7 +83,7 @@ function AnimatedCanvas() {
           platforms.forEach((platform) => {
             platform.position.x -= 5;
           });
-          console.log(km);
+        
           
         } else if (keys.left.pressed && km !== 14000) {
           km -= 5;
@@ -190,7 +190,7 @@ function AnimatedCanvas() {
       ref={canvasRef}
       width={1024}
       height={576}
-      className="flex border-2 border-black"
+      className="flex border-2 border-black z-10"
     />
   );
 }
