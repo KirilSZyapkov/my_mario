@@ -1,4 +1,4 @@
-export class genericObjects {
+export class GenericObjects {
   position: {
     x: number;
     y: number;
