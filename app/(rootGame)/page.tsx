@@ -1,4 +1,4 @@
-import AnimatedCanvas from "../_components/AnimatedCanvas";
+import AnimatedCanvas from "./_components/AnimatedCanvas";
 import Image from "next/image";
 
 function GamePage() {
@@ -10,8 +10,8 @@ function GamePage() {
         <p>"d" - move right</p>
         <p>"w" - jump</p>
       </div>
-      <Image src="/assets/background.jpg" alt="" fill  className="z-0"/>
-        <AnimatedCanvas />
+      <Image src="/assets/background.jpg" alt="" fill className="z-0" />
+      <AnimatedCanvas />
     </div>
   );
 }
