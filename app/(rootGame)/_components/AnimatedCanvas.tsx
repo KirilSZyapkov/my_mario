@@ -1,5 +1,10 @@
 "use client";
 
+type Props = {
+  setPlayerDied: (arg: boolean)=> void;
+  setPlayerWon: (arg: boolean)=> void
+}
+
 import { useRef, useEffect, useState } from "react";
 import { Player } from "@/utils/player";
 import { Platforms } from "@/utils/platforms";
@@ -7,15 +12,15 @@ import { createImage } from "@/utils/createImage";
 import { GenericObjects } from "@/utils/genericObjects";
 
 
-function AnimatedCanvas() {
+function AnimatedCanvas({setPlayerDied, setPlayerWon}: Props) {
   const longPlatformImg = createImage("assets/platform.png");
   const shortPlatformImg = createImage("assets/platformSmallTall.png");
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const requestRef = useRef<number | null>(null);
   const [player, setPlayer] = useState(new Player());
+  
   const [genericObjects] = useState<GenericObjects[]>(() => {
-    
     return [
       new GenericObjects(-1, -1, createImage("assets/background.png")),
       new GenericObjects(0, 0, createImage("assets/hills.png")),
@@ -67,11 +72,15 @@ function AnimatedCanvas() {
     player.update(c);
   };
 
-  const updateCollisions = () => {
+  const updateCollisions = (c: any) => {
     setPlayer((curPlayer) => {
-      if (keys.right.pressed && curPlayer.position.x < 500&& km < 14000) {
+      if (keys.right.pressed && curPlayer.position.x < 500 && km < 14000) {
         curPlayer.velocityX = 3;
-      } else if (keys.left.pressed && curPlayer.position.x > 230&& km !== 14000) {
+      } else if (
+        keys.left.pressed &&
+        curPlayer.position.x > 230 &&
+        km !== 14000
+      ) {
         curPlayer.velocityX = -3;
       } else {
         curPlayer.velocityX = 0;
@@ -83,8 +92,6 @@ function AnimatedCanvas() {
           platforms.forEach((platform) => {
             platform.position.x -= 5;
           });
-        
-          
         } else if (keys.left.pressed && km !== 14000) {
           km -= 5;
           genericObjects.forEach((genericObject) => {
@@ -114,17 +121,24 @@ function AnimatedCanvas() {
           return p;
         }
       });
+
+      if (curPlayer.position.y > c.height) {
+        setPlayerDied(true);
+      }
+      if (km >= 14000) {
+        setPlayerWon(true);
+      }
       return curPlayer;
     });
   };
 
   const animate = () => {
     const canvas = canvasRef.current;
-    updateCollisions();
     if (canvas) {
       const context = canvas.getContext("2d");
       if (context) {
         draw(context);
+        updateCollisions(canvas);
       }
     }
     requestRef.current = requestAnimationFrame(animate);
