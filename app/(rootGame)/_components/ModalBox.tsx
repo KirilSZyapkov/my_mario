@@ -1,6 +1,6 @@
 function ModalBox({ hasWon, hasDied }: { hasWon: boolean; hasDied: boolean }) {
   return (
-    <div className="flex justify-center items-center fixed z-50  top-0 left-0 w-full h-screen overflow-auto bg-gray-900/50 border-2 border-red-600">
+    <div style={{display:hasWon || hasDied ? "fixed" : "none"}} className="flex justify-center items-center fixed z-50  top-0 left-0 w-full h-screen overflow-auto bg-gray-900/50">
       {hasWon && (
         <div className="text-white text-center">
           <p className="uppercase font-bold tracking-widest text-center">

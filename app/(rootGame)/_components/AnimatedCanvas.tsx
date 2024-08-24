@@ -1,25 +1,32 @@
 "use client";
 
-type Props = {
-  setPlayerDied: (arg: boolean)=> void;
-  setPlayerWon: (arg: boolean)=> void
-}
-
 import { useRef, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Player } from "@/utils/player";
 import { Platforms } from "@/utils/platforms";
 import { createImage } from "@/utils/createImage";
 import { GenericObjects } from "@/utils/genericObjects";
 
-
-function AnimatedCanvas({setPlayerDied, setPlayerWon}: Props) {
+function AnimatedCanvas() {
   const longPlatformImg = createImage("assets/platform.png");
   const shortPlatformImg = createImage("assets/platformSmallTall.png");
+  const playerStandRightImg = createImage("assets/spriteStandRight.png");
+  const playerStandLeftImg = createImage("assets/spriteStandLeft.png");
+  const playerRunRightImg = createImage("assets/spriteRunRight.png");
+  const playerRunLeftImg = createImage("assets/spriteRunLeft.png");
+  const router = useRouter();
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const requestRef = useRef<number | null>(null);
-  const [player, setPlayer] = useState(new Player());
-  
+  const [player, setPlayer] = useState(
+    new Player(
+      playerStandRightImg,
+      playerStandLeftImg,
+      playerRunRightImg,
+      playerRunLeftImg
+    )
+  );
+
   const [genericObjects] = useState<GenericObjects[]>(() => {
     return [
       new GenericObjects(-1, -1, createImage("assets/background.png")),
@@ -123,10 +130,11 @@ function AnimatedCanvas({setPlayerDied, setPlayerWon}: Props) {
       });
 
       if (curPlayer.position.y > c.height) {
-        setPlayerDied(true);
+        router.refresh();
       }
+
       if (km >= 14000) {
-        setPlayerWon(true);
+        router.refresh();
       }
       return curPlayer;
     });
@@ -170,9 +178,15 @@ function AnimatedCanvas({setPlayerDied, setPlayerWon}: Props) {
     switch (key) {
       case "a":
         keys.left.pressed = true;
+        player.currentPlayerPosition = player.playerPositions.run.left;
+        player.currentCropWidth = player.playerPositions.run.cropWidth;
+        player.width = player.playerPositions.run.width
         break;
       case "d":
         keys.right.pressed = true;
+        player.currentPlayerPosition = player.playerPositions.run.right;
+        player.currentCropWidth = player.playerPositions.run.cropWidth;
+        player.width = player.playerPositions.run.width
         break;
     }
   });
@@ -180,9 +194,15 @@ function AnimatedCanvas({setPlayerDied, setPlayerWon}: Props) {
     switch (key) {
       case "a":
         keys.left.pressed = false;
+        player.currentPlayerPosition = player.playerPositions.stand.left;
+        player.currentCropWidth = player.playerPositions.stand.cropWidth;
+        player.width = player.playerPositions.stand.width
         break;
       case "d":
         keys.right.pressed = false;
+        player.currentPlayerPosition = player.playerPositions.stand.right;
+        player.currentCropWidth = player.playerPositions.stand.cropWidth;
+        player.width = player.playerPositions.stand.width
         break;
     }
   });
